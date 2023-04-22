@@ -48,7 +48,26 @@ public class BST {
      */
     public boolean search(int val) {
         // TODO: Complete the search function
-        return false;
+        // Calls the recursive function to search
+        return searchTree(val, root);
+    }
+
+    public boolean searchTree(int val, BSTNode cur){
+        // if the value is in the tree return the base case
+        if (cur.getVal() == val){
+            return true;
+        }
+        // If the tree ends and we are at a leaf then false
+        if (cur.getRight() == null && cur.getLeft() == null){
+            return false;
+        }
+        // And depending on what the value is compared to the current node go left or right
+        if (cur.getVal() > val){
+            return searchTree(val, cur.getLeft());
+        }
+        else{
+            return searchTree(val, cur.getRight());
+        }
     }
 
     /**
@@ -56,7 +75,24 @@ public class BST {
      */
     public ArrayList<BSTNode> getInorder() {
         // TODO: Complete inorder traversal
-        return null;
+        // Calls the recursive function to get the order
+        ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
+        return inOrder(arr, root);
+    }
+
+    public ArrayList<BSTNode> inOrder(ArrayList<BSTNode> arr, BSTNode a){
+        // First go down the left all the way you can and then add them
+        if (a.getLeft() != null){
+            inOrder(arr, a.getLeft());
+        }
+
+        arr.add(a);
+        // After the left go it adds the right going all the way down and then returns the array
+        if (a.getRight() != null){
+            inOrder(arr, a.getRight());
+        }
+
+        return arr;
     }
 
     /**
@@ -64,7 +100,27 @@ public class BST {
      */
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
-        return null;
+        // Calls the recursive function to get the order
+        ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
+        return preOrder(arr, root);
+    }
+
+    public ArrayList<BSTNode>  preOrder(ArrayList<BSTNode> arr, BSTNode a){
+
+        // Similar to the inorder this is just the order switched around with the root being added first
+        arr.add(a);
+
+        // Then we go down the left recursing and adding
+        if (a.getLeft() != null){
+            preOrder(arr, a.getLeft());
+        }
+
+        // And finally the right going down and adding
+        if (a.getRight() != null){
+            preOrder(arr, a.getRight());
+        }
+
+        return arr;
     }
 
     /**
@@ -72,7 +128,23 @@ public class BST {
      */
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
-        return null;
+        // Calls the recursive function to get the order
+        ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
+        return postOrder(arr, root);
+    }
+
+    public ArrayList<BSTNode> postOrder(ArrayList<BSTNode> arr, BSTNode a){
+        // And finally we do the other order where we add the left
+        if (a.getLeft() != null){
+            postOrder(arr, a.getLeft());
+        }
+        // Then add all the right elements
+        if (a.getRight() != null){
+            postOrder(arr, a.getRight());
+        }
+        // And finally add the root return the array
+        arr.add(a);
+        return arr;
     }
 
     /**
@@ -83,6 +155,28 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
+        // Calls the recursive method to insert
+        insertrec(val, root);
+    }
+
+    public void insertrec(int val, BSTNode a){
+        // Two different options for whether to add it to the right or left depending on value
+        if (a.getVal() > val){
+            // If the left is null we just insert their otherwise we call the method again
+            if (a.getLeft() == null){
+                a.setLeft(new BSTNode(val));
+                return;
+            }
+            insertrec(val, a.getLeft());
+        }
+        if (a.getVal() < val){
+            // Similarly if the right is null we just insert their otherwise we call the method again
+            if (a.getRight() == null){
+                a.setRight(new BSTNode(val));
+                return;
+            }
+            insertrec(val, a.getRight());
+        }
     }
 
     /**
